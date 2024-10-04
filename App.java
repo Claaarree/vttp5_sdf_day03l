@@ -9,9 +9,12 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import people.Person;
 import service.CSVManangement;
 
 public class App {
@@ -160,10 +163,51 @@ public class App {
     // fisg.close();
 
 
-        CSVManangement csv = new CSVManangement();
+    List<Person> persons = new ArrayList<>();    
+    
+    CSVManangement csv = new CSVManangement();
         csv.readCSV(dirPathFileName);
 
 
+        //menu
+        //1.Enter new Person details
+        //2.save to file (Prompt for new csv file name)
+        //3.Quit and terminate program
+
+        Console consoleSelection = System.console();
+        Integer selection = 0;
+        while (selection != 3) {
+        System.out.println("Welcome! Please select an option from the menu below:");
+        System.out.println("1. Enter new Person details");
+        System.out.println("2. Save to new csv file");
+        System.out.println("3. Quit and terminate the program");
+        selection = Integer.parseInt(consoleSelection.readLine(">>>"));
+
+        switch (selection) {
+            case 1:
+                Console con1 = System.console();
+                String personName = con1.readLine("Enter person name: ");
+                String personRegion = con1.readLine("Enter region/area: ");
+                Integer personYear = Integer.parseInt(con1.readLine("Enter year of birth: ").trim());
+
+                Person p = new Person(personName, personRegion, personYear);
+                persons.add(p);
+                break;
+
+            case 2:
+            Console con2 = System.console();
+            String newFilename = con2.readLine("Please Enter new file name:");
+            CSVManangement csvm = new CSVManangement();
+            csvm.writeCSV(dirPath + File.separator + newFilename, persons);
+            break;
+
+
+        }
+
+        
+
+
+        }
     }
     
 
